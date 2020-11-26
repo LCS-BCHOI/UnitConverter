@@ -20,4 +20,23 @@ extension View {
     }
 }
 
+struct ContentView: View {
+    @State private var input = ""
+    
+    @State private var convertFrom = 0
+    @State private var convertTo = 1
+    
+    var conversionTypes = ["Temperature", "Distance"]
+    @State private var conversionType = 0
+    
+    var conversions = [
+        ["Celsius", "Fahrenheit", "Kelvin"],
+        ["km", "feet", "yards", "miles"]
+    ]
+    var measureUnits = [
+        ["°C", "°F", "°K"],
+        ["km", " feet", " yards", " miles"]
+    ]
+
+
 
