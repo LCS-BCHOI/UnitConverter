@@ -37,6 +37,28 @@ struct ContentView: View {
         ["°C", "°F", "°K"],
         ["km", " feet", " yards", " miles"]
     ]
-
+    
+    var toCelsiusClosures: [(Double) -> Double] = [{ $0 }, { ($0 - 32) * 5/9 }, { $0-273.15 }]
+    var fromCelsiusClosures: [(Double) -> Double] = [{ $0 }, { $0 * 9/5 + 32 }, { $0+273.15 }]
+    var toMetersClosures: [(Double) -> Double] = [{ $0 * 1000 }, { $0 / 3.281 }, { $0 / 1.094 }, { $0 * 1609.344 }]
+    var fromMetersClosures: [(Double) -> Double] = [{ $0 / 1000 }, { $0 * 3.281  }, { $0 * 1.094 }, { $0 / 1609.344 }]
+    var output: Double {
+        guard let input = Double(input) else { return 0 }
+        
+        if conversionType == 0 {
+            // convert to Celsius
+            let toCelsius = toCelsiusClosures[convertFrom]
+            // convert to Target
+            let fromCelsius = fromCelsiusClosures[convertTo]
+            return fromCelsius(toCelsius(input))
+        } else if conversionType == 1 {
+            let toMeters = toMetersClosures[convertFrom]
+            let fromMeters = fromMetersClosures[convertTo]
+            return fromMeters(toMeters(input))
+        } else {
+            return 0
+        }
+    }
+   
 
 
