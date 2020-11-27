@@ -59,6 +59,51 @@ struct ContentView: View {
             return 0
         }
     }
-   
+    var body: some View {
+        NavigationView {
+            VStack {
+                Text("WeConvert").titleStyle()
+                
+                Form {
+                    
+                    Section(header: Text("Conversion type")) {
+                        Picker("Conversion type", selection: $conversionType) {
+                            ForEach(0 ..< conversionTypes.count) {
+                                Text("\(self.conversionTypes[$0])")
+                            }
+                        }.pickerStyle(SegmentedPickerStyle())
+                    }
+                
+                    Section {
+                        TextField("Input", text: $input)
+                    
+                        Picker("Convert From", selection: $convertFrom) {
+                            ForEach(0 ..< conversions[conversionType].count, id: \.self) {
+                                Text("\(self.conversions[self.conversionType][$0])")
+                            }
+                        }.pickerStyle(SegmentedPickerStyle())
+                    }
+                    
+                    Section(header: Text("Conversion Result")) {
+                        Picker("Convert To", selection: $convertTo) {
+                            ForEach(0 ..< conversions[conversionType].count, id: \.self) {
+                                Text("\(self.conversions[self.conversionType][$0])")
+                            }
+                        }.pickerStyle(SegmentedPickerStyle())
+                        
+                        Text("\(output, specifier:"%.1f")\(measureUnits[conversionType][convertTo])")
+                    }
+                    
+                }
+            }
+        }
+    }
+}
 
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
 
+    
